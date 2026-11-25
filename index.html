@@ -1,0 +1,773 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Furqan Ali is a Web Developer who builds modern, responsive and user-friendly websites.">
+<meta name="theme-color" content="#0b0d1a">
+<title>Furqan Ali Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap">
+<style>
+/* Layout concept: dark single-page portfolio. Sticky nav, split hero with an FA monogram,
+   then stacked sections (about, services, skills, projects, why me, contact) on rounded cards. */
+:root {
+  color-scheme: dark;
+  --bg: #0b0d1a;
+  --bg-soft: #0f1226;
+  --surface: #141836;
+  --surface-hi: #1b2050;
+  --line: rgba(143, 156, 255, 0.16);
+  --fg: #eceeff;
+  --muted: #a0a7cf;
+  --blue: #5b8cff;
+  --violet: #8b5cf6;
+  --ok: #34d399;
+  --bad: #ff7b8a;
+  --grad: linear-gradient(135deg, #5b8cff 0%, #8b5cf6 100%);
+  --shadow: 0 14px 40px rgba(2, 4, 20, 0.45);
+  --font-display: "Space Grotesk", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --radius: 22px;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font: 400 1rem/1.7 var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0 0 auto;
+  height: env(safe-area-inset-top, 0px);
+  background: var(--bg);
+  z-index: 60;
+}
+img { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+h1, h2, h3 { font-family: var(--font-display); line-height: 1.15; margin: 0; text-wrap: balance; letter-spacing: -0.01em; }
+p { margin: 0; }
+ul { margin: 0; padding: 0; list-style: none; }
+
+.wrap {
+  width: 100%;
+  max-width: 1180px;
+  margin-inline: auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.icon { width: 1.25em; height: 1.25em; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; border-radius: 8px; }
+.skip { position: absolute; left: 16px; top: -60px; background: var(--surface-hi); padding: 10px 16px; border-radius: 10px; z-index: 100; }
+.skip:focus { top: calc(env(safe-area-inset-top, 0px) + 10px); }
+
+/* ---------- Header ---------- */
+.site-header {
+  position: sticky;
+  top: env(safe-area-inset-top, 0px);
+  z-index: 50;
+  background: rgba(11, 13, 26, 0.78);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--line);
+}
+.nav { display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 70px; }
+.logo { display: flex; align-items: center; gap: 10px; font-family: var(--font-display); font-weight: 700; font-size: 1.15rem; }
+.logo-mark {
+  width: 36px; height: 36px; border-radius: 12px; background: var(--grad);
+  display: grid; place-items: center; font-size: 0.85rem; letter-spacing: 0.04em; color: #fff;
+  box-shadow: 0 6px 18px rgba(91, 140, 255, 0.35);
+}
+.nav-links { display: flex; align-items: center; gap: 4px; }
+.nav-links a:not(.btn) { padding: 8px 14px; border-radius: 999px; color: var(--muted); font-weight: 500; font-size: 0.95rem; transition: color 0.2s, background 0.2s; }
+.nav-links a:not(.btn):hover, .nav-links a.active { color: var(--fg); background: rgba(139, 92, 246, 0.16); }
+.nav-cta { margin-left: 8px; }
+.only-mobile { display: none; }
+.menu-btn {
+  display: none; width: 44px; height: 44px; border-radius: 12px; border: 1px solid var(--line);
+  background: var(--surface); color: var(--fg); cursor: pointer; place-items: center;
+}
+.menu-btn .icon { width: 22px; height: 22px; }
+.menu-btn .i-close { display: none; }
+.nav-open .menu-btn .i-open { display: none; }
+.nav-open .menu-btn .i-close { display: block; }
+
+/* ---------- Buttons ---------- */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  padding: 13px 24px; border-radius: 999px; font-weight: 600; font-size: 0.97rem; font-family: var(--font-body);
+  border: 1px solid transparent; cursor: pointer; transition: transform 0.2s, box-shadow 0.25s, background 0.2s, border-color 0.2s;
+}
+.btn-primary { background: var(--grad); color: #fff; box-shadow: 0 10px 28px rgba(91, 140, 255, 0.32); }
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 14px 34px rgba(139, 92, 246, 0.42); }
+.btn-ghost { background: transparent; color: var(--fg); border-color: var(--line); }
+.btn-ghost:hover { border-color: var(--blue); background: rgba(91, 140, 255, 0.1); transform: translateY(-2px); }
+.btn-sm { padding: 9px 18px; font-size: 0.9rem; }
+.btn-wa { background: #1fae5b; color: #fff; }
+.btn-wa:hover { transform: translateY(-2px); background: #23c368; }
+
+/* ---------- Sections ---------- */
+section { position: relative; padding-block: clamp(64px, 9vw, 110px); scroll-margin-top: 70px; }
+.alt { background: var(--bg-soft); }
+.section-head { max-width: 640px; margin-bottom: clamp(32px, 5vw, 56px); display: grid; gap: 14px; }
+.section-head.center { margin-inline: auto; text-align: center; }
+.eyebrow { font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.16em; color: var(--blue); }
+.section-head h2 { font-size: clamp(1.9rem, 4.2vw, 2.7rem); }
+.section-head p { color: var(--muted); }
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+}
+.card:hover { transform: translateY(-6px); border-color: rgba(139, 92, 246, 0.55); box-shadow: 0 20px 50px rgba(60, 40, 160, 0.3); }
+
+.chip-icon {
+  width: 54px; height: 54px; border-radius: 16px; display: grid; place-items: center; color: #fff;
+  background: var(--grad); box-shadow: 0 8px 22px rgba(91, 140, 255, 0.3); transition: transform 0.3s;
+}
+.chip-icon .icon { width: 26px; height: 26px; }
+.card:hover .chip-icon { transform: rotate(-6deg) scale(1.08); }
+
+/* ---------- Hero ---------- */
+.hero { overflow: hidden; padding-block: clamp(48px, 8vw, 96px) clamp(64px, 9vw, 110px); }
+.blob { position: absolute; border-radius: 50%; filter: blur(70px); opacity: 0.5; pointer-events: none; animation: float 16s ease-in-out infinite; }
+.blob.b1 { width: 380px; height: 380px; background: #5b8cff; top: -120px; left: -120px; opacity: 0.32; }
+.blob.b2 { width: 420px; height: 420px; background: #8b5cf6; bottom: -160px; right: -100px; opacity: 0.34; animation-delay: -6s; }
+.grid-bg {
+  position: absolute; inset: 0; pointer-events: none; opacity: 0.5;
+  background-image: linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(ellipse at 50% 40%, #000 0%, transparent 70%);
+  -webkit-mask-image: radial-gradient(ellipse at 50% 40%, #000 0%, transparent 70%);
+}
+@keyframes float { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(30px, 40px); } }
+@keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+@keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.55); } 100% { box-shadow: 0 0 0 10px rgba(52, 211, 153, 0); } }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.hero-grid { position: relative; display: grid; grid-template-columns: 1.15fr 0.85fr; gap: clamp(32px, 6vw, 72px); align-items: center; }
+.hero-text { display: grid; gap: 22px; min-width: 0; }
+.status {
+  display: inline-flex; align-items: center; gap: 10px; width: fit-content; padding: 7px 16px; border-radius: 999px;
+  background: rgba(91, 140, 255, 0.1); border: 1px solid var(--line); font-size: 0.88rem; color: var(--muted);
+}
+.status i { width: 9px; height: 9px; border-radius: 50%; background: var(--ok); animation: pulse 1.8s infinite; }
+.hero h1 { font-size: clamp(2.5rem, 6.4vw, 4.4rem); font-weight: 700; }
+.grad { background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.role { font-family: var(--font-display); font-size: clamp(1.25rem, 2.6vw, 1.7rem); font-weight: 500; color: var(--blue); }
+.hero p.lead { color: var(--muted); font-size: 1.1rem; max-width: 520px; }
+.actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 6px; }
+
+.hero-visual { position: relative; display: grid; place-items: center; min-width: 0; }
+.avatar-stage { position: relative; width: min(100%, 360px); aspect-ratio: 1; display: grid; place-items: center; }
+.ring { position: absolute; inset: 0; border-radius: 50%; border: 1px dashed rgba(139, 92, 246, 0.5); animation: spin 40s linear infinite; }
+.ring.r2 { inset: 9%; border-style: solid; border-color: var(--line); animation-direction: reverse; animation-duration: 55s; }
+.avatar {
+  width: 68%; aspect-ratio: 1; border-radius: 50%; background: var(--grad); display: grid; place-items: center;
+  font-family: var(--font-display); font-weight: 700; font-size: clamp(3.2rem, 11vw, 5.6rem); letter-spacing: 0.02em; color: #fff;
+  box-shadow: 0 24px 60px rgba(91, 140, 255, 0.4), inset 0 0 0 6px rgba(255, 255, 255, 0.12);
+  position: relative;
+}
+.tag {
+  position: absolute; padding: 8px 14px; border-radius: 14px; background: var(--surface-hi); border: 1px solid var(--line);
+  font-family: var(--font-display); font-weight: 600; font-size: 0.85rem; box-shadow: var(--shadow); animation: bob 5s ease-in-out infinite;
+}
+.tag.t1 { top: 6%; left: -2%; color: #ff9a62; }
+.tag.t2 { top: 22%; right: -4%; color: #62a8ff; animation-delay: -1.5s; }
+.tag.t3 { bottom: 12%; left: 0; color: #ffd34d; animation-delay: -3s; }
+.tag.t4 { bottom: 4%; right: 4%; color: #b79bff; animation-delay: -2s; }
+
+/* ---------- About ---------- */
+.about-grid { display: grid; grid-template-columns: 0.8fr 1.2fr; gap: clamp(32px, 6vw, 72px); align-items: center; }
+.about-card { padding: 40px 28px; display: grid; place-items: center; gap: 22px; text-align: center; }
+.about-card .avatar { width: min(220px, 70%); font-size: clamp(2.6rem, 8vw, 4rem); }
+.about-card strong { font-family: var(--font-display); font-size: 1.3rem; display: block; }
+.about-card span { color: var(--muted); }
+.about-text { display: grid; gap: 24px; min-width: 0; }
+.about-text p { color: var(--muted); font-size: 1.05rem; }
+.highlights { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.highlight { display: flex; align-items: center; gap: 14px; padding: 16px; border-radius: 16px; background: var(--surface); border: 1px solid var(--line); font-weight: 500; transition: border-color 0.3s, transform 0.3s; }
+.highlight:hover { border-color: var(--blue); transform: translateY(-3px); }
+.highlight .icon { color: var(--blue); width: 24px; height: 24px; }
+
+/* ---------- Services ---------- */
+.services-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; max-width: 900px; margin-inline: auto; }
+.service { padding: 36px 32px; display: grid; gap: 18px; align-content: start; }
+.service h3 { font-size: 1.4rem; }
+.service p { color: var(--muted); }
+.more { display: inline-flex; align-items: center; gap: 8px; color: var(--blue); font-weight: 600; width: fit-content; }
+.more .icon { transition: transform 0.25s; }
+.more:hover .icon { transform: translateX(5px); }
+
+/* ---------- Skills ---------- */
+.skills-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+.skill { padding: 24px; display: grid; gap: 14px; }
+.skill-top { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+.skill-name { font-family: var(--font-display); font-weight: 600; font-size: 1.1rem; }
+.skill-pct { color: var(--muted); font-size: 0.9rem; font-variant-numeric: tabular-nums; }
+.track { height: 9px; border-radius: 999px; background: rgba(143, 156, 255, 0.14); overflow: hidden; }
+.fill { display: block; height: 100%; width: 0; border-radius: 999px; background: var(--grad); transition: width 1.2s cubic-bezier(0.2, 0.7, 0.2, 1); }
+.skill.in .fill { width: var(--lvl); }
+
+/* ---------- Projects ---------- */
+.projects-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+.project { overflow: hidden; display: grid; grid-template-rows: auto 1fr; }
+.shot { position: relative; aspect-ratio: 16 / 10; background: linear-gradient(160deg, #1b2050, #121530); overflow: hidden; border-bottom: 1px solid var(--line); }
+.shot img { width: 100%; height: 100%; object-fit: cover; }
+.mock { position: absolute; inset: 14% 10% 10%; border-radius: 12px; border: 1px solid var(--line); background: rgba(11, 13, 26, 0.55); padding: 12px; display: grid; grid-template-rows: auto 1fr; gap: 10px; }
+.mock .dots { display: flex; gap: 6px; }
+.mock .dots i { width: 8px; height: 8px; border-radius: 50%; background: rgba(160, 167, 207, 0.4); }
+.mock .lines { display: grid; grid-template-columns: 1.4fr 1fr; gap: 10px; }
+.mock .lines b { border-radius: 8px; background: rgba(91, 140, 255, 0.14); }
+.mock .lines b:first-child { grid-row: span 2; background: rgba(139, 92, 246, 0.2); }
+.badge { position: absolute; top: 14px; left: 14px; padding: 6px 12px; border-radius: 999px; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.04em; background: rgba(11, 13, 26, 0.8); border: 1px solid rgba(139, 92, 246, 0.6); color: #cdbcff; backdrop-filter: blur(6px); }
+.project-body { padding: 24px; display: grid; gap: 14px; align-content: start; min-width: 0; }
+.project-body h3 { font-size: 1.25rem; }
+.project-body p { color: var(--muted); font-size: 0.97rem; }
+.tags { display: flex; flex-wrap: wrap; gap: 8px; }
+.tags li { padding: 4px 12px; border-radius: 999px; font-size: 0.8rem; background: rgba(91, 140, 255, 0.12); color: #b9ccff; border: 1px solid var(--line); }
+.tags li.empty { background: transparent; color: var(--muted); border-style: dashed; }
+.project-links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 4px; }
+
+/* ---------- Why me ---------- */
+.why-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; }
+.why { padding: 28px 24px; display: grid; gap: 16px; align-content: start; }
+.why h3 { font-size: 1.15rem; }
+.why p { color: var(--muted); font-size: 0.95rem; }
+
+/* ---------- Contact ---------- */
+.contact-grid { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: clamp(28px, 5vw, 56px); align-items: start; }
+.contact-info { display: grid; gap: 20px; min-width: 0; }
+.contact-card { padding: 24px; display: grid; gap: 14px; }
+.contact-card .row { display: flex; align-items: center; gap: 14px; min-width: 0; }
+.contact-card h3 { font-size: 1.1rem; }
+.contact-value { color: var(--muted); overflow-wrap: anywhere; }
+.contact-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+.form { padding: clamp(22px, 4vw, 36px); display: grid; gap: 18px; }
+.form-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+.field { display: grid; gap: 8px; min-width: 0; }
+.field label { font-weight: 500; font-size: 0.92rem; }
+.field input, .field textarea {
+  width: 100%; padding: 13px 16px; border-radius: 14px; border: 1px solid var(--line); background: var(--bg-soft);
+  color: var(--fg); font: inherit; transition: border-color 0.2s, box-shadow 0.2s;
+}
+.field textarea { min-height: 140px; resize: vertical; }
+.field input:focus, .field textarea:focus { outline: none; border-color: var(--blue); box-shadow: 0 0 0 4px rgba(91, 140, 255, 0.2); }
+.field input[aria-invalid="true"], .field textarea[aria-invalid="true"] { border-color: var(--bad); }
+.err { color: var(--bad); font-size: 0.85rem; min-height: 1.1em; }
+.result { padding: 18px; border-radius: 16px; background: rgba(52, 211, 153, 0.08); border: 1px solid rgba(52, 211, 153, 0.4); display: grid; gap: 12px; }
+.result p { color: var(--fg); }
+
+/* ---------- Footer ---------- */
+.site-footer { border-top: 1px solid var(--line); background: var(--bg-soft); padding-block: 48px 28px; }
+.foot-grid { display: grid; grid-template-columns: 1.2fr 1fr auto; gap: 32px; align-items: start; }
+.foot-brand { display: grid; gap: 8px; }
+.foot-brand strong { font-family: var(--font-display); font-size: 1.3rem; }
+.foot-brand span { color: var(--muted); }
+.foot-links { display: flex; flex-wrap: wrap; gap: 8px 22px; }
+.foot-links a { color: var(--muted); transition: color 0.2s; }
+.foot-links a:hover { color: var(--fg); }
+.socials { display: flex; gap: 12px; }
+.socials a { width: 44px; height: 44px; border-radius: 14px; display: grid; place-items: center; background: var(--surface); border: 1px solid var(--line); transition: transform 0.25s, background 0.25s, border-color 0.25s; }
+.socials a:hover { transform: translateY(-4px); background: var(--surface-hi); border-color: var(--blue); }
+.copyright { margin-top: 36px; padding-top: 22px; border-top: 1px solid var(--line); color: var(--muted); font-size: 0.9rem; text-align: center; }
+[hidden] { display: none !important; }
+
+/* ---------- Scroll reveal ---------- */
+.js .reveal { opacity: 0.2; transform: translateY(20px); transition: opacity 0.7s ease, transform 0.7s ease; transition-delay: var(--d, 0s); }
+.js .reveal.in { opacity: 1; transform: none; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1020px) {
+  .skills-grid, .projects-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .why-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 860px) {
+  .menu-btn { display: grid; }
+  .nav-cta { display: none; }
+  .only-mobile { display: block; }
+  .nav-links {
+    position: absolute; top: 100%; left: 0; right: 0; flex-direction: column; align-items: stretch; gap: 4px;
+    padding: 16px max(16px, env(safe-area-inset-right, 0px)) 20px max(16px, env(safe-area-inset-left, 0px));
+    background: rgba(11, 13, 26, 0.97); border-bottom: 1px solid var(--line); display: none;
+  }
+  .nav-open .nav-links { display: flex; }
+  .nav-links a:not(.btn) { padding: 13px 16px; font-size: 1.02rem; }
+  .nav-links .btn { margin-top: 8px; }
+  .hero-grid, .about-grid, .contact-grid { grid-template-columns: 1fr; }
+  .hero-visual { order: -1; }
+  .avatar-stage { width: min(78%, 300px); }
+  .about-card { order: -1; }
+  .foot-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 620px) {
+  .services-grid, .skills-grid, .projects-grid, .why-grid, .form-row, .highlights { grid-template-columns: 1fr; }
+  .actions .btn { flex: 1 1 100%; }
+  .tag { font-size: 0.75rem; padding: 6px 10px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation: none !important; transition-duration: 0.01ms !important; }
+  .js .reveal { opacity: 1; transform: none; }
+  .fill { width: var(--lvl) !important; }
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <symbol id="i-code" viewBox="0 0 24 24"><path d="M16 18l6-6-6-6M8 6l-6 6 6 6"/></symbol>
+    <symbol id="i-layout" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></symbol>
+    <symbol id="i-chat" viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><path d="M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/><path d="M22 6l-10 7L2 6"/></symbol>
+    <symbol id="i-github" viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M3 12h18M3 6h18M3 18h18"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></symbol>
+    <symbol id="i-layers" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></symbol>
+    <symbol id="i-pointer" viewBox="0 0 24 24"><path d="M3 3l7.07 16.97 2.51-7.39 7.39-2.51L3 3z"/></symbol>
+    <symbol id="i-book" viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2zM22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></symbol>
+    <symbol id="i-briefcase" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></symbol>
+  </defs>
+</svg>
+
+<header class="site-header" id="top">
+  <div class="wrap nav">
+    <a class="logo" href="#home" aria-label="Furqan Ali, home">
+      <span class="logo-mark" aria-hidden="true">FA</span>
+      <span>Furqan Ali</span>
+    </a>
+    <nav aria-label="Main">
+      <ul class="nav-links" id="nav-links">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li class="only-mobile"><a class="btn btn-primary" href="#contact">Let's Talk</a></li>
+      </ul>
+    </nav>
+    <a class="btn btn-primary btn-sm nav-cta" href="#contact">Let's Talk</a>
+    <button class="menu-btn" id="menu-btn" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Open menu">
+      <svg class="icon i-open" aria-hidden="true"><use href="#i-menu"/></svg>
+      <svg class="icon i-close" aria-hidden="true"><use href="#i-x"/></svg>
+    </button>
+  </div>
+</header>
+
+<main id="main">
+  <!-- HERO -->
+  <section class="hero" id="home" aria-labelledby="hero-title">
+    <div class="blob b1"></div><div class="blob b2"></div><div class="grid-bg"></div>
+    <div class="wrap hero-grid">
+      <div class="hero-text">
+        <span class="status reveal"><i></i> Available for freelance website projects</span>
+        <h1 id="hero-title" class="reveal" style="--d:.05s">Hi, I'm <span class="grad">Furqan Ali</span></h1>
+        <p class="role reveal" style="--d:.1s">Web Developer</p>
+        <p class="lead reveal" style="--d:.15s">I build modern, responsive and user-friendly websites that help businesses create a strong online presence.</p>
+        <div class="actions reveal" style="--d:.2s">
+          <a class="btn btn-primary" href="#projects">View My Projects <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+          <a class="btn btn-ghost" href="#contact">Contact Me</a>
+        </div>
+      </div>
+      <div class="hero-visual reveal" style="--d:.1s">
+        <div class="avatar-stage" role="img" aria-label="Furqan Ali avatar with the initials FA">
+          <div class="ring"></div><div class="ring r2"></div>
+          <div class="avatar">FA</div>
+          <span class="tag t1">HTML5</span>
+          <span class="tag t2">CSS3</span>
+          <span class="tag t3">JavaScript</span>
+          <span class="tag t4">&lt;/&gt;</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="alt" id="about" aria-labelledby="about-title">
+    <div class="wrap about-grid">
+      <div class="card about-card reveal">
+        <div class="avatar" role="img" aria-label="Furqan Ali avatar">FA</div>
+        <div><strong>Furqan Ali</strong><span>Web Developer</span></div>
+      </div>
+      <div class="about-text">
+        <div class="section-head reveal" style="margin:0">
+          <span class="eyebrow">Who I am</span>
+          <h2 id="about-title">About Me</h2>
+        </div>
+        <p class="reveal" style="--d:.05s">I'm Furqan Ali, a passionate Web Developer who enjoys creating modern and responsive websites. I focus on clean design, user-friendly experiences and writing organized code. I'm continuously improving my skills and building real-world projects.</p>
+        <ul class="highlights">
+          <li class="highlight reveal" style="--d:.08s"><svg class="icon" aria-hidden="true"><use href="#i-code"/></svg>Clean, organized code</li>
+          <li class="highlight reveal" style="--d:.12s"><svg class="icon" aria-hidden="true"><use href="#i-phone"/></svg>Responsive on every screen</li>
+          <li class="highlight reveal" style="--d:.16s"><svg class="icon" aria-hidden="true"><use href="#i-book"/></svg>Always learning and improving</li>
+          <li class="highlight reveal" style="--d:.2s"><svg class="icon" aria-hidden="true"><use href="#i-briefcase"/></svg>Open to freelance work</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services" aria-labelledby="services-title">
+    <div class="wrap">
+      <div class="section-head center reveal">
+        <span class="eyebrow">What I do</span>
+        <h2 id="services-title">Services</h2>
+        <p>Focused on building websites that look great and work everywhere.</p>
+      </div>
+      <div class="services-grid">
+        <article class="card service reveal">
+          <div class="chip-icon"><svg class="icon" aria-hidden="true"><use href="#i-code"/></svg></div>
+          <h3>Website Development</h3>
+          <p>Building modern, professional and functional websites for businesses and individuals.</p>
+          <a class="more" href="#contact">Start a project <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        </article>
+        <article class="card service reveal" style="--d:.1s">
+          <div class="chip-icon"><svg class="icon" aria-hidden="true"><use href="#i-phone"/></svg></div>
+          <h3>Responsive Website Design</h3>
+          <p>Creating websites that work perfectly on mobile phones, tablets and desktop screens.</p>
+          <a class="more" href="#contact">Start a project <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section class="alt" id="skills" aria-labelledby="skills-title">
+    <div class="wrap">
+      <div class="section-head center reveal">
+        <span class="eyebrow">Toolbox</span>
+        <h2 id="skills-title">My Skills</h2>
+        <p>The technologies I use to build websites.</p>
+      </div>
+      <div class="skills-grid" id="skills-grid"></div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects" aria-labelledby="projects-title">
+    <div class="wrap">
+      <div class="section-head center reveal">
+        <span class="eyebrow">Portfolio</span>
+        <h2 id="projects-title">My Recent Projects</h2>
+        <p>My first showcase projects are on the way. Check back soon.</p>
+      </div>
+      <div class="projects-grid" id="projects-grid"></div>
+    </div>
+  </section>
+
+  <!-- WHY CHOOSE ME -->
+  <section class="alt" id="why" aria-labelledby="why-title">
+    <div class="wrap">
+      <div class="section-head center reveal">
+        <span class="eyebrow">Why work with me</span>
+        <h2 id="why-title">Why Choose Me</h2>
+      </div>
+      <div class="why-grid">
+        <article class="card why reveal">
+          <div class="chip-icon"><svg class="icon" aria-hidden="true"><use href="#i-code"/></svg></div>
+          <h3>Clean Code</h3>
+          <p>Organized, readable code that is easy to maintain and extend.</p>
+        </article>
+        <article class="card why reveal" style="--d:.07s">
+          <div class="chip-icon"><svg class="icon" aria-hidden="true"><use href="#i-phone"/></svg></div>
+          <h3>Responsive Websites</h3>
+          <p>Layouts that adapt smoothly to phones, tablets and desktops.</p>
+        </article>
+        <article class="card why reveal" style="--d:.14s">
+          <div class="chip-icon"><svg class="icon" aria-hidden="true"><use href="#i-layers"/></svg></div>
+          <h3>Modern Designs</h3>
+          <p>Contemporary, polished visuals that make a strong first impression.</p>
+        </article>
+        <article class="card why reveal" style="--d:.21s">
+          <div class="chip-icon"><svg class="icon" aria-hidden="true"><use href="#i-pointer"/></svg></div>
+          <h3>User-Friendly Experience</h3>
+          <p>Clear navigation and simple interactions that visitors enjoy.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" aria-labelledby="contact-title">
+    <div class="wrap">
+      <div class="section-head center reveal">
+        <span class="eyebrow">Contact</span>
+        <h2 id="contact-title">Let's Work Together</h2>
+        <p>Have a website idea or need a professional website for your business? Let's discuss your project.</p>
+      </div>
+      <div class="contact-grid">
+        <div class="contact-info">
+          <div class="card contact-card reveal">
+            <div class="row">
+              <div class="chip-icon"><svg class="icon" aria-hidden="true"><use href="#i-chat"/></svg></div>
+              <div><h3>WhatsApp</h3><p class="contact-value" id="wa-display"></p></div>
+            </div>
+            <div class="contact-actions">
+              <a class="btn btn-wa btn-sm" id="wa-btn" href="#contact" target="_blank" rel="noopener noreferrer"><svg class="icon" aria-hidden="true"><use href="#i-chat"/></svg> Chat on WhatsApp</a>
+            </div>
+          </div>
+          <div class="card contact-card reveal" style="--d:.08s">
+            <div class="row">
+              <div class="chip-icon"><svg class="icon" aria-hidden="true"><use href="#i-mail"/></svg></div>
+              <div><h3>Email</h3><p class="contact-value" id="email-text"></p></div>
+            </div>
+            <div class="contact-actions">
+              <a class="btn btn-primary btn-sm" id="email-btn" href="#contact"><svg class="icon" aria-hidden="true"><use href="#i-mail"/></svg> Send an Email</a>
+              <button class="btn btn-ghost btn-sm" id="copy-email" type="button"><svg class="icon" aria-hidden="true"><use href="#i-copy"/></svg> <span id="copy-label">Copy address</span></button>
+            </div>
+          </div>
+        </div>
+
+        <form class="card form reveal" id="contact-form" novalidate style="--d:.1s">
+          <div class="form-row">
+            <div class="field">
+              <label for="f-name">Name</label>
+              <input id="f-name" name="name" type="text" autocomplete="name" placeholder="Your name" aria-describedby="err-name" required>
+              <span class="err" id="err-name" aria-live="polite"></span>
+            </div>
+            <div class="field">
+              <label for="f-email">Email</label>
+              <input id="f-email" name="email" type="email" autocomplete="email" placeholder="you@example.com" aria-describedby="err-email" required>
+              <span class="err" id="err-email" aria-live="polite"></span>
+            </div>
+          </div>
+          <div class="field">
+            <label for="f-subject">Subject</label>
+            <input id="f-subject" name="subject" type="text" placeholder="What is your project about?" aria-describedby="err-subject" required>
+            <span class="err" id="err-subject" aria-live="polite"></span>
+          </div>
+          <div class="field">
+            <label for="f-message">Message</label>
+            <textarea id="f-message" name="message" placeholder="Tell me about your website idea" aria-describedby="err-message" required></textarea>
+            <span class="err" id="err-message" aria-live="polite"></span>
+          </div>
+          <button class="btn btn-primary" type="submit">Send Message <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+          <div class="result" id="form-result" hidden role="status">
+            <p>Your message is ready. WhatsApp should open with it filled in. If it did not, choose a way to send it:</p>
+            <div class="contact-actions">
+              <a class="btn btn-wa btn-sm" id="res-wa" href="#contact" target="_blank" rel="noopener noreferrer">Send on WhatsApp</a>
+              <a class="btn btn-ghost btn-sm" id="res-mail" href="#contact">Send by Email</a>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand"><strong>Furqan Ali</strong><span>Web Developer</span></div>
+      <nav aria-label="Footer">
+        <div class="foot-links">
+          <a href="#home">Home</a><a href="#about">About</a><a href="#services">Services</a>
+          <a href="#skills">Skills</a><a href="#projects">Projects</a><a href="#contact">Contact</a>
+        </div>
+      </nav>
+      <div class="socials">
+        <a id="foot-wa" href="#contact" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"><svg class="icon" aria-hidden="true"><use href="#i-chat"/></svg></a>
+        <a id="foot-mail" href="#contact" aria-label="Email"><svg class="icon" aria-hidden="true"><use href="#i-mail"/></svg></a>
+        <a id="foot-gh" href="#contact" target="_blank" rel="noopener noreferrer" aria-label="GitHub" hidden><svg class="icon" aria-hidden="true"><use href="#i-github"/></svg></a>
+      </div>
+    </div>
+    <p class="copyright">&copy; 2026 Furqan Ali. All Rights Reserved.</p>
+  </div>
+</footer>
+
+<script>
+/* =====================================================================
+   EDIT YOUR DETAILS HERE. Everything below this block works automatically.
+   ===================================================================== */
+const CONFIG = {
+  // WhatsApp number. Local format (03xx...) or international digits both work.
+  whatsapp: "03072663879",
+  countryCode: "92",            // used to convert a leading 0 into the country code
+  email: "furqanmemon927@gmail.com",
+  github: "",                   // e.g. "https://github.com/your-username". Leave empty to hide the GitHub icon.
+
+  // Skill levels are percentages (0 to 100). Adjust them to match your own level.
+  skills: [
+    { name: "HTML5", level: 85 },
+    { name: "CSS3", level: 80 },
+    { name: "JavaScript", level: 70 },
+    { name: "Responsive Web Design", level: 80 },
+    { name: "Git", level: 65 },
+    { name: "GitHub", level: 65 }
+  ],
+
+  // Projects. To publish a real project: change comingSoon to false, then fill in
+  // title, description, tags, image (a file path or image URL), demo and github.
+  // The Live Demo and GitHub buttons only appear when their link is filled in.
+  projects: [
+    { comingSoon: true, title: "Project One", description: "A real project will be showcased here soon.", tags: [], image: "", demo: "", github: "" },
+    { comingSoon: true, title: "Project Two", description: "A real project will be showcased here soon.", tags: [], image: "", demo: "", github: "" },
+    { comingSoon: true, title: "Project Three", description: "A real project will be showcased here soon.", tags: [], image: "", demo: "", github: "" }
+  ]
+};
+
+/* ------------------------- helpers ------------------------- */
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+const esc = (v) => String(v).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+document.documentElement.classList.add("js");
+
+function waDigits() {
+  let d = CONFIG.whatsapp.replace(/\D/g, "");
+  if (d.startsWith("00")) d = d.slice(2);
+  else if (d.startsWith("0")) d = CONFIG.countryCode + d.slice(1);
+  return d;
+}
+const waLink = (text) => "https://wa.me/" + waDigits() + (text ? "?text=" + encodeURIComponent(text) : "");
+const mailLink = (subject, body) =>
+  "mailto:" + CONFIG.email + (subject || body ? "?subject=" + encodeURIComponent(subject || "") + "&body=" + encodeURIComponent(body || "") : "");
+
+/* ------------------------- contact details ------------------------- */
+$("#wa-display").textContent = "+" + waDigits();
+$("#email-text").textContent = CONFIG.email;
+$("#wa-btn").href = waLink("Hi Furqan, I found your portfolio and would like to talk about a website.");
+$("#foot-wa").href = waLink("");
+$("#email-btn").href = mailLink("Website project", "");
+$("#foot-mail").href = mailLink("", "");
+if (CONFIG.github) { const g = $("#foot-gh"); g.href = CONFIG.github; g.hidden = false; }
+
+$("#copy-email").addEventListener("click", async () => {
+  const label = $("#copy-label");
+  const done = () => { label.textContent = "Copied"; setTimeout(() => (label.textContent = "Copy address"), 1800); };
+  try { await navigator.clipboard.writeText(CONFIG.email); done(); }
+  catch (e) {
+    const r = document.createRange(); r.selectNodeContents($("#email-text"));
+    const s = getSelection(); s.removeAllRanges(); s.addRange(r);
+    try { document.execCommand("copy"); done(); } catch (_) { label.textContent = "Press Ctrl+C"; }
+  }
+});
+
+/* ------------------------- skills ------------------------- */
+$("#skills-grid").innerHTML = CONFIG.skills.map((s, i) => {
+  const lvl = Math.max(0, Math.min(100, Number(s.level) || 0));
+  return `<article class="card skill reveal" style="--lvl:${lvl}%;--d:${(i % 3) * 0.07}s">
+    <div class="skill-top"><span class="skill-name">${esc(s.name)}</span><span class="skill-pct">${lvl}%</span></div>
+    <div class="track" role="progressbar" aria-label="${esc(s.name)} skill level" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${lvl}"><span class="fill"></span></div>
+  </article>`;
+}).join("");
+
+/* ------------------------- projects ------------------------- */
+$("#projects-grid").innerHTML = CONFIG.projects.map((p, i) => {
+  const shot = p.image
+    ? `<img src="${esc(p.image)}" alt="Screenshot of ${esc(p.title)}" loading="lazy" decoding="async">`
+    : `<div class="mock" aria-hidden="true"><div class="dots"><i></i><i></i><i></i></div><div class="lines"><b></b><b></b><b></b></div></div>`;
+  const badge = p.comingSoon ? `<span class="badge">Coming Soon</span>` : "";
+  const tags = (p.tags && p.tags.length)
+    ? p.tags.map((t) => `<li>${esc(t)}</li>`).join("")
+    : `<li class="empty">Tech stack to be added</li>`;
+  const demo = p.demo ? `<a class="btn btn-primary btn-sm" href="${esc(p.demo)}" target="_blank" rel="noopener noreferrer">Live Demo</a>` : "";
+  const gh = p.github ? `<a class="btn btn-ghost btn-sm" href="${esc(p.github)}" target="_blank" rel="noopener noreferrer"><svg class="icon" aria-hidden="true"><use href="#i-github"/></svg> GitHub</a>` : "";
+  const links = demo || gh ? `<div class="project-links">${demo}${gh}</div>` : "";
+  return `<article class="card project reveal" style="--d:${i * 0.08}s">
+    <div class="shot">${shot}${badge}</div>
+    <div class="project-body"><h3>${esc(p.title)}</h3><p>${esc(p.description)}</p><ul class="tags">${tags}</ul>${links}</div>
+  </article>`;
+}).join("");
+
+/* ------------------------- mobile menu + smooth scroll ------------------------- */
+const header = $(".site-header");
+const menuBtn = $("#menu-btn");
+function setMenu(open) {
+  header.classList.toggle("nav-open", open);
+  menuBtn.setAttribute("aria-expanded", String(open));
+  menuBtn.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+}
+menuBtn.addEventListener("click", () => setMenu(!header.classList.contains("nav-open")));
+document.addEventListener("keydown", (e) => { if (e.key === "Escape") setMenu(false); });
+document.addEventListener("click", (e) => { if (!header.contains(e.target)) setMenu(false); });
+
+document.addEventListener("click", (e) => {
+  const a = e.target.closest('a[href^="#"]');
+  if (!a) return;
+  const id = a.getAttribute("href").slice(1);
+  const target = id ? document.getElementById(id) : null;
+  if (!target) return;
+  e.preventDefault();
+  setMenu(false);
+  target.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
+});
+
+/* ------------------------- active link highlight ------------------------- */
+const navAnchors = $$("#nav-links a[href^='#']");
+if ("IntersectionObserver" in window) {
+  const spy = new IntersectionObserver((entries) => {
+    entries.forEach((en) => {
+      if (en.isIntersecting) {
+        navAnchors.forEach((a) => a.classList.toggle("active", a.getAttribute("href") === "#" + en.target.id));
+      }
+    });
+  }, { rootMargin: "-45% 0px -50% 0px" });
+  ["home", "about", "services", "skills", "projects", "contact"].forEach((id) => { const s = document.getElementById(id); if (s) spy.observe(s); });
+}
+
+/* ------------------------- scroll reveal ------------------------- */
+const revealEls = $$(".reveal");
+if ("IntersectionObserver" in window && !reduceMotion) {
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((en) => { if (en.isIntersecting) { en.target.classList.add("in"); io.unobserve(en.target); } });
+  }, { threshold: 0.12 });
+  revealEls.forEach((el) => io.observe(el));
+  setTimeout(() => revealEls.forEach((el) => el.classList.add("in")), 4000);
+} else {
+  revealEls.forEach((el) => el.classList.add("in"));
+}
+
+/* ------------------------- contact form ------------------------- */
+const form = $("#contact-form");
+const rules = {
+  name: (v) => (v.length >= 2 ? "" : "Please enter your name."),
+  email: (v) => (/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v) ? "" : "Please enter a valid email address."),
+  subject: (v) => (v.length >= 3 ? "" : "Please add a short subject."),
+  message: (v) => (v.length >= 10 ? "" : "Please write at least 10 characters.")
+};
+function checkField(key) {
+  const input = $("#f-" + key);
+  const msg = rules[key](input.value.trim());
+  $("#err-" + key).textContent = msg;
+  input.setAttribute("aria-invalid", msg ? "true" : "false");
+  return !msg;
+}
+Object.keys(rules).forEach((k) => $("#f-" + k).addEventListener("input", () => { if ($("#f-" + k).getAttribute("aria-invalid") === "true") checkField(k); }));
+
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const results = Object.keys(rules).map((k) => [k, checkField(k)]);
+  const firstBad = results.find((r) => !r[1]);
+  if (firstBad) { $("#f-" + firstBad[0]).focus(); $("#form-result").hidden = true; return; }
+
+  const v = (k) => $("#f-" + k).value.trim();
+  const text = `Hi Furqan, my name is ${v("name")}.\nSubject: ${v("subject")}\n\n${v("message")}\n\nReply to: ${v("email")}`;
+  const wa = waLink(text);
+  $("#res-wa").href = wa;
+  $("#res-mail").href = mailLink(v("subject"), `${v("message")}\n\nFrom: ${v("name")} (${v("email")})`);
+  $("#form-result").hidden = false;
+
+  const opener = document.createElement("a");
+  opener.href = wa; opener.target = "_blank"; opener.rel = "noopener noreferrer";
+  document.body.appendChild(opener); opener.click(); opener.remove();
+});
+</script>
+</body>
+</html>
